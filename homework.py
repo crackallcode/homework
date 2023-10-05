@@ -5,6 +5,7 @@ import pytesseract
 from PIL import Image
 from pdf2image import convert_from_path, pdf2image
 from docx import Document
+Image.MAX_IMAGE_PIXELS = None
 
 print("working on it")
 
@@ -54,7 +55,6 @@ chunks = [extracted_text[i:i+chunk_size] for i in range(0, len(extracted_text), 
 complete_response = ""
 
 for chunk in chunks:
-    print(chunk)
     completion = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": "Can you make 1 paragraphs of notes from this " + chunk}])
     response = completion['choices'][0]['message']['content']
     complete_response += '\n'+ '\n' + response
